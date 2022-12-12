@@ -1,4 +1,5 @@
 import { Image, StyleSheet, View } from 'react-native';
+import Input from '../components/Input';
 
 const SignInScreen = () => {
     return (
@@ -9,6 +10,8 @@ const SignInScreen = () => {
                 stlye={styles.image}
                 resizeMode={'cover'}
             />
+            <Input title={'email'} placeholder={'your@email.com'} />
+            <Input title={'password'} />
         </View>
     );
 };
