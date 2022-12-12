@@ -1,5 +1,7 @@
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 import PropTypes from 'prop-types';
+import { BLACK, GRAY, PRIMARY } from '../colors';
+import { useState } from 'react';
 
 export const KeyboardTypes = {
     DEFAULT: 'deault',
@@ -11,19 +13,35 @@ export const ReturnKeyTypes = {
     NEXT: 'next',
 };
 
-const Input = ({ title, placeholder, ...props }) => {
+const Input = ({ title, placeholder, value, ...props }) => {
+    const [isFocused, setIsFocused] = useState(false);
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>{title}</Text>
+            <Text
+                style={[
+                    styles.title,
+                    value && styles.hasValueTitle,
+                    isFocused && styles.focusedTitle,
+                ]}
+            >
+                {title}
+            </Text>
             <TextInput
                 {...props}
-                style={styles.input}
+                value={value}
+                style={[
+                    styles.input,
+                    value && styles.hasValueInput,
+                    isFocused && styles.focusedInput,
+                ]}
                 placeholder={placeholder ?? title}
-                placeholderTextColor={'#a3a3a3'}
+                placeholderTextColor={GRAY.DEFAULT}
                 autoCapitalize={'none'}
                 autoCorrect={false}
                 textContentType={'none'}
                 keyboardAppearance={'light'}
+                onFocus={() => setIsFocused(true)}
+                onBlur={() => setIsFocused(false)}
             />
         </View>
     );
@@ -36,6 +54,7 @@ Input.defaultProps = {
 Input.propTypes = {
     title: PropTypes.string,
     placeholder: PropTypes.string,
+    value: PropTypes.string,
 };
 
 const styles = StyleSheet.create({
@@ -46,12 +65,30 @@ const styles = StyleSheet.create({
     },
     title: {
         marginBottom: 4,
+        color: GRAY.DEFAULT,
+    },
+    hasValueTitle: {
+        color: BLACK,
     },
     input: {
         borderWidth: 1,
         borderRadius: 8,
+        borderColor: GRAY.DEFAULT,
         paddingHorizontal: 20,
         height: 42,
+    },
+    hasValueInput: {
+        borderColor: BLACK,
+        color: BLACK,
+    },
+    focusedTitle: {
+        fontWeight: '600',
+        color: PRIMARY.DEFAULT,
+    },
+    focusedInput: {
+        borderWidth: 2,
+        borderColor: PRIMARY.DEFAULT,
+        color: PRIMARY.DEFAULT,
     },
 });
 
