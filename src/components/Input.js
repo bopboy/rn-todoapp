@@ -11,14 +11,7 @@ export const ReturnKeyTypes = {
     NEXT: 'next',
 };
 
-const Input = ({
-    title,
-    placeholder,
-    // keyboardType,
-    // returnKeyType,
-    // secureTextEntry,
-    ...props
-}) => {
+const Input = ({ title, placeholder, ...props }) => {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>{title}</Text>
@@ -31,9 +24,6 @@ const Input = ({
                 autoCorrect={false}
                 textContentType={'none'}
                 keyboardAppearance={'light'}
-                // keyboardType={keyboardType}
-                // returnKeyType={returnKeyType}
-                // secureTextEntry={secureTextEntry}
             />
         </View>
     );
@@ -46,9 +36,6 @@ Input.defaultProps = {
 Input.propTypes = {
     title: PropTypes.string,
     placeholder: PropTypes.string,
-    // keyboardType: PropTypes.oneOf(Object.values(KeyboardTypes)),
-    // returnKeyType: PropTypes.oneOf(Object.values(ReturnKeyTypes)),
-    // secureTextEntry: PropTypes.bool,
 };
 
 const styles = StyleSheet.create({
