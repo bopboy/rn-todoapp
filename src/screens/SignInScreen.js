@@ -1,23 +1,37 @@
-import { Image, StyleSheet, View } from 'react-native';
+import {
+    Image,
+    StyleSheet,
+    View,
+} from 'react-native';
 import Input, { KeyboardTypes, ReturnKeyTypes } from '../components/Input';
+import SafeInputView from '../components/SafeInputView';
 
 const SignInScreen = () => {
     return (
-        <View style={styles.container}>
-            <Image
-                // eslint-disable-next-line no-undef
-                source={require('../../assets/test.png')}
-                stlye={styles.image}
-                resizeMode={'cover'}
-            />
-            <Input
-                title={'email'}
-                placeholder={'your@email.com'}
-                keyboardType={KeyboardTypes.EMAIL}
-                returnKeyType={ReturnKeyTypes.NEXT}
-            />
-            <Input title={'password'} secureTextEntry />
-        </View>
+        // <KeyboardAvoidingView
+        //     style={styles.avoid}
+        //     behavior={Platform.select({ ios: 'padding' })}
+        // >
+        //     <Pressable style={styles.avoid} onPress={Keyboard.dismiss}>
+        <SafeInputView>
+            <View style={styles.container}>
+                <Image
+                    // eslint-disable-next-line no-undef
+                    source={require('../../assets/main.png')}
+                    stlye={styles.image}
+                    resizeMode={'cover'}
+                />
+                <Input
+                    title={'email'}
+                    placeholder={'your@email.com'}
+                    keyboardType={KeyboardTypes.EMAIL}
+                    returnKeyType={ReturnKeyTypes.NEXT}
+                />
+                <Input title={'password'} secureTextEntry />
+            </View>
+        </SafeInputView>
+        // </Pressable>
+        // </KeyboardAvoidingView>
     );
 };
 
