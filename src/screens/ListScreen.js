@@ -1,8 +1,9 @@
 import { StyleSheet, Text, View } from 'react-native';
 import Button from '../components/Button';
+import PropTypes from 'prop-types';
 
-const ListScreen = ({ navigation, route }) => {
-    console.log(route.params);
+const ListScreen = ({ navigation }) => {
+    // console.log(route.params);
     return (
         <View style={styles.container}>
             <Text style={{ fontSize: 30 }}>ListScreen</Text>
@@ -16,6 +17,10 @@ const ListScreen = ({ navigation, route }) => {
             />
         </View>
     );
+};
+
+ListScreen.propTypes = {
+    navigation: PropTypes.object,
 };
 
 const styles = StyleSheet.create({

@@ -8,8 +8,9 @@ import Input, {
     ReturnKeyTypes,
 } from '../components/Input';
 import SafeInputView from '../components/SafeInputView';
+import PropTypes from 'prop-types';
 
-const SignInScreen = ({ navigation, route }) => {
+const SignInScreen = ({ navigation }) => {
     // console.log(navigation);
     // console.log(route);
     const [email, setEmail] = useState('');
@@ -17,6 +18,14 @@ const SignInScreen = ({ navigation, route }) => {
     const passwordRef = useRef(null);
     const [disabled, setDisabled] = useState(true);
     const [isLoading, setIsLoading] = useState(false);
+
+    // useEffect(() => {
+    //     navigation.setOptions({
+    //         contentStyle: {
+    //             backgroundColor: email ? 'skyblue' : 'lightgray',
+    //         },
+    //     });
+    // }, [navigation, email]);
 
     useEffect(() => {
         setDisabled(!email || !password);
@@ -77,6 +86,10 @@ const SignInScreen = ({ navigation, route }) => {
             </View>
         </SafeInputView>
     );
+};
+
+SignInScreen.propTypes = {
+    navigation: PropTypes.object,
 };
 
 const styles = StyleSheet.create({
