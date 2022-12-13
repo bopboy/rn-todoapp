@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
-import { Image, StyleSheet, View } from 'react-native';
+import { Image, Keyboard, StyleSheet, View } from 'react-native';
+import Button from '../components/Button';
 import Input, {
     IconNames,
     KeyboardTypes,
@@ -11,10 +12,15 @@ const SignInScreen = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const passwordRef = useRef(null);
+    const [disabled, setDisabled] = useState(false);
 
     const onSubmit = () => {
-        console.log('onSubmit');
+        if (!disabled) {
+            Keyboard.dismiss();
+            console.log('onSubmit');
+        }
     };
+
     return (
         <SafeInputView>
             <View style={styles.container}>
@@ -43,6 +49,13 @@ const SignInScreen = () => {
                     iconName={IconNames.PASSWORD}
                     onSubmitEditing={onSubmit}
                 />
+                <View style={styles.buttonContainer}>
+                    <Button
+                        title={'Login'}
+                        onPress={onSubmit}
+                        disabled={disabled}
+                    />
+                </View>
             </View>
         </SafeInputView>
     );
@@ -59,5 +72,11 @@ const styles = StyleSheet.create({
         width: 200,
         height: 200,
     },
+    buttonContainer: {
+        width: '100%',
+        paddingHorizontal: 20,
+        marginTop: 20,
+    },
 });
+
 export default SignInScreen;
