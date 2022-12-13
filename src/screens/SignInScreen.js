@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Image, Keyboard, StyleSheet, View } from 'react-native';
+import { signIn } from '../api/auth';
 import Button from '../components/Button';
 import Input, {
     IconNames,
@@ -13,14 +14,23 @@ const SignInScreen = () => {
     const [password, setPassword] = useState('');
     const passwordRef = useRef(null);
     const [disabled, setDisabled] = useState(true);
+    const [isLoading, setIsLoading] = useState(false);
+
     useEffect(() => {
         setDisabled(!email || !password);
     }, [email, password]);
 
-    const onSubmit = () => {
-        if (!disabled) {
+    const onSubmit = async () => {
+        if (!disabled && !isLoading) {
             Keyboard.dismiss();
-            console.log('onSubmit');
+            setIsLoading(true);
+            try {
+                const data = await signIn(email, password);
+                console.log(data);
+            } catch (e) {
+                console.log(e);
+            }
+            setIsLoading(false);
         }
     };
 
@@ -54,9 +64,10 @@ const SignInScreen = () => {
                 />
                 <View style={styles.buttonContainer}>
                     <Button
-                        title={'Login'}
+                        title={'LOGIN'}
                         onPress={onSubmit}
                         disabled={disabled}
+                        isLoading={isLoading}
                     />
                 </View>
             </View>

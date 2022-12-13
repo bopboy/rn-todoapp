@@ -1,7 +1,7 @@
-import { Pressable, StyleSheet, Text } from 'react-native';
+import { ActivityIndicator, Pressable, StyleSheet, Text } from 'react-native';
 import PropTypes from 'prop-types';
-import { PRIMARY, WHITE } from '../colors';
-const Button = ({ title, onPress, disabled }) => {
+import { GRAY, PRIMARY, WHITE } from '../colors';
+const Button = ({ title, onPress, disabled, isLoading }) => {
     return (
         <Pressable
             onPress={onPress}
@@ -12,7 +12,11 @@ const Button = ({ title, onPress, disabled }) => {
             ]}
             disabled={disabled}
         >
-            <Text style={styles.title}>{title}</Text>
+            {isLoading ? (
+                <ActivityIndicator size={'small'} color={GRAY.DEFAULT} />
+            ) : (
+                <Text style={styles.title}>{title}</Text>
+            )}
         </Pressable>
     );
 };
@@ -21,6 +25,7 @@ Button.propTypes = {
     title: PropTypes.string.isRequired,
     onPress: PropTypes.func.isRequired,
     disabled: PropTypes.bool,
+    isLoading: PropTypes.bool,
 };
 
 const styles = StyleSheet.create({
@@ -31,6 +36,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingVertical: 20,
     },
-    title: { color: WHITE, fontSize: 16, fontWeight: '700' },
+    title: { color: WHITE, fontSize: 16, fontWeight: '700', lineHeight: 20 },
 });
 export default Button;
