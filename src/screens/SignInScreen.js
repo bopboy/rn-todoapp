@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { Image, Keyboard, StyleSheet, View } from 'react-native';
+import { Alert, Image, Keyboard, StyleSheet, View } from 'react-native';
 import { signIn } from '../api/auth';
 import Button from '../components/Button';
 import Input, {
@@ -28,9 +28,25 @@ const SignInScreen = () => {
                 const data = await signIn(email, password);
                 console.log(data);
             } catch (e) {
-                console.log(e);
+                Alert.alert('SignIn Error', e, [
+                    { text: 'OK', onPress: () => setIsLoading(false) },
+                    // {
+                    //     text: 'default',
+                    //     onPress: () => console.log('default'),
+                    //     style: 'default',
+                    // },
+                    // {
+                    //     text: 'cancel',
+                    //     onPress: () => console.log('cancel'),
+                    //     style: 'cancel',
+                    // },
+                    // {
+                    //     text: 'done',
+                    //     onPress: () => console.log('done'),
+                    //     style: 'destructive',
+                    // },
+                ]);
             }
-            setIsLoading(false);
         }
     };
 
