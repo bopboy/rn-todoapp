@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Alert, Image, Keyboard, StyleSheet, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { signIn } from '../api/auth';
 import Button from '../components/Button';
 import Input, {
@@ -49,7 +50,7 @@ const SignInScreen = ({ navigation }) => {
 
     return (
         <SafeInputView>
-            <View style={styles.container}>
+            <SafeAreaView style={styles.container}>
                 <Image
                     // eslint-disable-next-line no-undef
                     source={require('../../assets/main.png')}
@@ -83,7 +84,7 @@ const SignInScreen = ({ navigation }) => {
                         isLoading={isLoading}
                     />
                 </View>
-            </View>
+            </SafeAreaView>
         </SafeInputView>
     );
 };
@@ -95,8 +96,8 @@ SignInScreen.propTypes = {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
+        // justifyContent: 'center',
+        // alignItems: 'center',
     },
     image: {
         borderWidth: 1,
