@@ -9,7 +9,6 @@ import Input, {
     ReturnKeyTypes,
 } from '../components/Input';
 import SafeInputView from '../components/SafeInputView';
-import PropTypes from 'prop-types';
 import { useUserContext } from '../contexts/UserContext';
 
 const SignInScreen = () => {
@@ -33,7 +32,6 @@ const SignInScreen = () => {
             setIsLoading(true);
             try {
                 const data = await signIn(email, password);
-                setIsLoading(false);
                 setUser(data);
             } catch (e) {
                 Alert.alert('SignIn Error', e, [
@@ -81,7 +79,7 @@ const SignInScreen = () => {
                 />
                 <View style={styles.buttonContainer}>
                     <Button
-                        title={'LOGIN'}
+                        title={'SIGNIN'}
                         onPress={onSubmit}
                         disabled={disabled}
                         isLoading={isLoading}
@@ -90,11 +88,6 @@ const SignInScreen = () => {
             </View>
         </SafeInputView>
     );
-};
-
-SignInScreen.propTypes = {
-    // navigation: PropTypes.object,
-    setUser: PropTypes.func,
 };
 
 const styles = StyleSheet.create({
