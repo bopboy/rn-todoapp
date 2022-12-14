@@ -1,21 +1,22 @@
 import EmptyList from '../components/EmptyList';
 import InputFAB from '../components/InputFAB';
 import List from '../components/List';
+import 'react-native-get-random-values';
+import { nanoid } from 'nanoid';
+import { useState } from 'react';
 
 const ListScreen = () => {
-    const todos = [
-        // { id: 1, task: 'React Native 1', isDone: false },
-        // { id: 2, task: 'React Native 2', isDone: true },
-        // { id: 3, task: 'React Native 3', isDone: false },
-        // { id: 4, task: 'React Native 4', isDone: true },
-        // { id: 5, task: 'React Native 5', isDone: false },
-        // { id: 6, task: 'React Native 6', isDone: false },
-    ];
+    const [todos, setTodos] = useState([]);
 
+    const onInsert = (task) => {
+        const id = nanoid(id);
+        const newTask = { id, task, isDone: false };
+        setTodos((prev) => [newTask, ...prev]);
+    };
     return (
         <>
             {todos.length ? <List data={todos} /> : <EmptyList />}
-            <InputFAB />
+            <InputFAB onInsert={onInsert} />
         </>
     );
 };

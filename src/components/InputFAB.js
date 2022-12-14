@@ -6,16 +6,16 @@ import {
     StyleSheet,
     TextInput,
     useWindowDimensions,
-    View,
 } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { BLACK, PRIMARY, WHITE } from '../colors';
 import { useEffect, useRef, useState } from 'react';
+import PropTypes from 'prop-types';
 
 const BOTTOM = 30;
 const BUTTON_WIDTH = 60;
 
-const InputFAB = () => {
+const InputFAB = ({ onInsert }) => {
     const [text, setText] = useState('');
     const [isOpened, setIsOpened] = useState(false);
     const inputRef = useRef(null);
@@ -51,6 +51,7 @@ const InputFAB = () => {
             duration: 300,
         }).start(() => {
             inputRef.current.blur();
+            setText('');
         });
         Animated.spring(buttonRotation, {
             toValue: 0,
@@ -60,6 +61,13 @@ const InputFAB = () => {
     };
     const onPressButton = () => {
         isOpened ? close() : open();
+    };
+
+    const onPressInsert = () => {
+        const task = text.trim();
+        if (task) {
+            onInsert(task);
+        }
     };
 
     useEffect(() => {
@@ -102,6 +110,7 @@ const InputFAB = () => {
                     keyboardAppearance={'light'}
                     returnKeyType={'done'}
                     onBlur={close}
+                    onSubmitEditing={onPressInsert}
                 />
             </Animated.View>
             <Animated.View
@@ -127,6 +136,10 @@ const InputFAB = () => {
             </Animated.View>
         </>
     );
+};
+
+InputFAB.propTypes = {
+    onInsert: PropTypes.func.isRequired,
 };
 
 const styles = StyleSheet.create({
