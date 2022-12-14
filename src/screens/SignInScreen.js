@@ -10,7 +10,7 @@ import Input, {
 } from '../components/Input';
 import SafeInputView from '../components/SafeInputView';
 import PropTypes from 'prop-types';
-import UserContext from '../contexts/UserContext';
+import { useUserContext } from '../contexts/UserContext';
 
 const SignInScreen = () => {
     const [email, setEmail] = useState('');
@@ -21,7 +21,7 @@ const SignInScreen = () => {
 
     const insets = useSafeAreaInsets();
 
-    const { setUser } = useContext(UserContext);
+    const { setUser } = useUserContext();
 
     useEffect(() => {
         setDisabled(!email || !password);

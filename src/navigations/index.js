@@ -1,11 +1,10 @@
 import { NavigationContainer } from '@react-navigation/native';
-import { useContext } from 'react';
-import UserContext from '../contexts/UserContext';
+import { useUserContext } from '../contexts/UserContext';
 import AuthStack from './AuthStack';
 import MainStack from './MainStack';
 
 const Navigation = () => {
-    const { user } = useContext(UserContext);
+    const { user } = useUserContext();
     return (
         <NavigationContainer>
             {user ? <MainStack /> : <AuthStack />}
