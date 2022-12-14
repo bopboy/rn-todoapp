@@ -1,4 +1,5 @@
 import {
+    Animated,
     Keyboard,
     Platform,
     Pressable,
@@ -7,12 +8,12 @@ import {
     useWindowDimensions,
     View,
 } from 'react-native';
-import PropTypes from 'prop-types';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { BLACK, PRIMARY, WHITE } from '../colors';
 import { useEffect, useRef, useState } from 'react';
 
 const BOTTOM = 30;
+const BUTTON_WIDTH = 60;
 
 const InputFAB = () => {
     const [text, setText] = useState('');
@@ -20,14 +21,27 @@ const InputFAB = () => {
     const inputRef = useRef(null);
     const windowWidth = useWindowDimensions().width;
     const [keyboardHeight, setKeyboardHeight] = useState(BOTTOM);
+    const inputWidth = useRef(new Animated.Value(BUTTON_WIDTH)).current;
 
     const open = () => {
         setIsOpened(true);
-        inputRef.current.focus();
+        Animated.timing(inputWidth, {
+            toValue: windowWidth - 20,
+            useNativeDriver: false,
+            duration: 300,
+        }).start(() => {
+            inputRef.current.focus();
+        });
     };
     const close = () => {
         setIsOpened(false);
-        inputRef.current.blur();
+        Animated.timing(inputWidth, {
+            toValue: BUTTON_WIDTH,
+            useNativeDriver: false,
+            duration: 300,
+        }).start(() => {
+            inputRef.current.blur();
+        });
     };
     const onPressButton = () => {
         isOpened ? close() : open();
@@ -48,12 +62,15 @@ const InputFAB = () => {
 
     return (
         <>
-            <View
+            <Animated.View
                 style={[
                     styles.container,
                     styles.shadow,
-                    { bottom: keyboardHeight, alignItems: 'flex-start' },
-                    isOpened && { width: windowWidth - 20 },
+                    {
+                        bottom: keyboardHeight,
+                        alignItems: 'flex-start',
+                        width: inputWidth,
+                    },
                 ]}
             >
                 <TextInput
@@ -68,7 +85,7 @@ const InputFAB = () => {
                     returnKeyType={'done'}
                     onBlur={close}
                 />
-            </View>
+            </Animated.View>
             <Pressable
                 onPress={onPressButton}
                 style={({ pressed }) => [
@@ -83,18 +100,14 @@ const InputFAB = () => {
     );
 };
 
-InputFAB.propTypes = {
-    // propTypes
-};
-
 const styles = StyleSheet.create({
     container: {
         position: 'absolute',
         bottom: BOTTOM,
         right: 10,
-        width: 60,
-        height: 60,
-        borderRadius: 30,
+        width: BUTTON_WIDTH,
+        height: BUTTON_WIDTH,
+        borderRadius: BUTTON_WIDTH / 2,
         backgroundColor: PRIMARY.DEFAULT,
         justifyContent: 'center',
         alignItems: 'center',
@@ -102,7 +115,7 @@ const styles = StyleSheet.create({
     input: {
         color: WHITE,
         paddingLeft: 20,
-        paddingRight: 70,
+        paddingRight: BUTTON_WIDTH + 10,
     },
     shadow: {
         shadowColor: BLACK,
