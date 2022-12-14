@@ -4,7 +4,7 @@ import { memo } from 'react';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { BLACK, DANGER, PRIMARY } from '../colors';
 
-const ListItem = memo(({ item }) => {
+const ListItem = memo(({ item, onDelete, onToggle }) => {
     const checkboxProps = {
         name: item.isDone ? 'checkbox-marked' : 'checkbox-blank-outline',
         color: item.isDone ? PRIMARY.DEFAULT : BLACK,
@@ -12,24 +12,11 @@ const ListItem = memo(({ item }) => {
     };
     return (
         <View style={styles.container}>
-            <Pressable onPress={() => {}} hitSlop={10}>
-                {/* {item.isDone ? (
-                    <MaterialCommunityIcons
-                        name="checkbox-marked"
-                        size={20}
-                        color={PRIMARY.DEFAULT}
-                    />
-                ) : (
-                    <MaterialCommunityIcons
-                        name="checkbox-blank-outline"
-                        size={20}
-                        color={PRIMARY.DEFAULT}
-                    />
-                )} */}
+            <Pressable onPress={() => onToggle(item.id)} hitSlop={10}>
                 <MaterialCommunityIcons {...checkboxProps} />
             </Pressable>
             <Text style={styles.task}>{item.task}</Text>
-            <Pressable>
+            <Pressable onPress={() => onDelete(item.id)} hitSlop={10}>
                 <MaterialCommunityIcons
                     name="trash-can"
                     size={20}
@@ -43,6 +30,8 @@ ListItem.displayName = 'ListItem';
 
 ListItem.propTypes = {
     item: PropTypes.object.isRequired,
+    onDelete: PropTypes.func,
+    onToggle: PropTypes.func,
 };
 
 const styles = StyleSheet.create({
