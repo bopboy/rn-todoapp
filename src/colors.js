@@ -7,6 +7,12 @@ export const PRIMARY = {
     DARK: '#1e3a8a',
 };
 
+export const DANGER = {
+    DEFAULT: '#dc2626',
+    LIGHT: '#fca5a5',
+    DARK: '#7c1d1d',
+};
+
 export const GRAY = {
     DEFAULT: '#a3a3a3',
 };
