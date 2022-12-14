@@ -1,4 +1,5 @@
 import EmptyList from '../components/EmptyList';
+import InputFAB from '../components/InputFAB';
 import List from '../components/List';
 
 const ListScreen = () => {
@@ -11,7 +12,12 @@ const ListScreen = () => {
         // { id: 6, task: 'React Native 6', isDone: false },
     ];
 
-    return todos.length ? <List data={todos} /> : <EmptyList />;
+    return (
+        <>
+            {todos.length ? <List data={todos} /> : <EmptyList />}
+            <InputFAB />
+        </>
+    );
 };
 
 export default ListScreen;
